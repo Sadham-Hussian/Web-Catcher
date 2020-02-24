@@ -36,7 +36,7 @@ Bloom filter is a probabilistic data structure invented by Burton Howard Bloom i
 _**To add an element to the bloom filter, we hash the element k times using hash functions and set bits at indexes of those hash values.**_
  
  
- <script src="https://gist.github.com/Sadham-Hussian/7aabe80f8f25a3cbbcd4e4fa26ff46dd.js"></script>
+ {% gist 7aabe80f8f25a3cbbcd4e4fa26ff46dd %}
  
  
  To test for membership, we simply hash the element with hash functions and then check if those indices are set in the bit vector. If the bit at all those indices is not set, you know that the element is not in the set. If they are set, it might be because the same element or combination of other elements could have set the same bits. Later is the reason why a bloom filter can sometimes give a **false positive** answer.
