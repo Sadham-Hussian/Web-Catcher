@@ -18,17 +18,17 @@ Bloom filter is a probabilistic data structure invented by Burton Howard Bloom i
   Most hash functions are one-way operations, which means you can get an identifier from the data, not vice versa. Two-way hash functions also exist, but they are not particularly useful.
   
  # Important properties of hash functions are:
-  ..* Same input must always have the same output. It is one of the most important features.
-  ..* The output values should be uniformly distributed. It means each possible output value should be equally likely.
-  ..* The output should be distributed randomly. A Similar input should not give similar output.
-  ..* Each input should give a unique output to minimize the number of collisions.
-  ..* It should be fast.
+  * Same input must always have the same output. It is one of the most important features.
+  * The output values should be uniformly distributed. It means each possible output value should be equally likely.
+  * The output should be distributed randomly. A Similar input should not give similar output.
+  * Each input should give a unique output to minimize the number of collisions.
+  * It should be fast.
  
  Different hash functions are designed for different tasks. Their properties differ based on the task for which you are using them. 
  
  # Hash functions used with bloom filter should have the following properties:
-  ..* It should be fast.
-  ..* The hash function should have rare collisions and hash value should be evenly and randomly distributed.
+  * It should be fast.
+  * The hash function should have rare collisions and hash value should be evenly and randomly distributed.
   
  ## Bloom filter implementation
  A basic bloom filter will have two operations **test** and **add.** The Base data structure for the bloom filter is **bit vector** or **bit-array.** It uses a bit array of size **m** and **k** hash functions. Initially, all the bits in bit vector will be set to 0.
