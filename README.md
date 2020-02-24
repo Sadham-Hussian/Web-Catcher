@@ -13,6 +13,33 @@ Bloom filter is a probabilistic data structure invented by Burton Howard Bloom i
   7. It also requires very less space compared to the number of items you need to store and check.
   8. Bloom filters use hash functions and before discussing bloom filter in detail, let’s have a look at hashing and hash functions.
  ## Hashing and Hash Functions  
-  1. A hash is like a fingerprint of your data. 
-  2. A hash function takes input data which can be of any length and gives back output as an identifier of smaller, fixed length. 
-  3. The identifier can be used to index or compare or identify data.
+  A hash is like a fingerprint of your data. A hash function takes input data which can be of any length and gives back output as an identifier of smaller, fixed length. The identifier can be used to index or compare or identify data.
+  
+  Most hash functions are one-way operations, which means you can get an identifier from the data, not vice versa. Two-way hash functions also exist, but they are not particularly useful.
+  
+ # Important properties of hash functions are:
+  ..* Same input must always have the same output. It is one of the most important features.
+  ..* The output values should be uniformly distributed. It means each possible output value should be equally likely.
+  ..* The output should be distributed randomly. A Similar input should not give similar output.
+  ..* Each input should give a unique output to minimize the number of collisions.
+  ..* It should be fast.
+ 
+ Different hash functions are designed for different tasks. Their properties differ based on the task for which you are using them. 
+ 
+ # Hash functions used with bloom filter should have the following properties:
+  ..* It should be fast.
+  ..* The hash function should have rare collisions and hash value should be evenly and randomly distributed.
+  
+ ## Bloom filter implementation
+ A basic bloom filter will have two operations **test** and **add.** The Base data structure for the bloom filter is **bit vector** or **bit-array.** It uses a bit array of size **m** and **k** hash functions. Initially, all the bits in bit vector will be set to 0.
+
+_**To add an element to the bloom filter, we hash the element k times using hash functions and set bits at indexes of those hash values.**_
+ 
+ 
+ <script src="https://gist.github.com/Sadham-Hussian/7aabe80f8f25a3cbbcd4e4fa26ff46dd.js"></script>
+ 
+ 
+ To test for membership, we simply hash the element with hash functions and then check if those indices are set in the bit vector. If the bit at all those indices is not set, you know that the element is not in the set. If they are set, it might be because the same element or combination of other elements could have set the same bits. Later is the reason why a bloom filter can sometimes give a **false positive** answer.
+ 
+ 
+ <script src="https://gist.github.com/Sadham-Hussian/8fcd3140a0bfcee5ad285c6aafd0c75f.js"></script>
