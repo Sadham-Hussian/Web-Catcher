@@ -36,25 +36,54 @@ Bloom filter is a probabilistic data structure invented by Burton Howard Bloom i
 _**To add an element to the bloom filter, we hash the element k times using hash functions and set bits at indexes of those hash values.**_
 
  
- ```python3
- def add(item):
-    for hash_function in hash_functions:
-        index = hash_function(item) % m
-        bit_array[index] = True
+ ```c++
+ bool Bloom_filters::add_URL(string new_element)
+{
+    uint32_t fnv_index = FNV_hash(new_element);
+    uint32_t murmur_index = Murmur_hash(new_element);
+    filter_array[fnv_index] = 1;
+    filter_array[murmur_index] = 1;
+    collision_zone[fnv_index] = collision_zone[fnv_index] + 1;
+    collision_zone[murmur_index] = collision_zone[murmur_index] + 1;
+
+    if(Hash_number > 2)
+    {
+        for(int i=3;i<=Hash_number;i++)
+        {
+            uint32_t hash_index = fnv_index + (i * murmur_index);
+            hash_index = hash_index % size_of_filter;
+            filter_array[hash_index] = 1;
+        }
+    }
+    return true;
+}
  ```
   
  
  To test for membership, we simply hash the element with hash functions and then check if those indices are set in the bit vector. If the bit at all those indices is not set, you know that the element is not in the set. If they are set, it might be because the same element or combination of other elements could have set the same bits. Later is the reason why a bloom filter can sometimes give a **false positive** answer.
  
 
-```python3
-def test(item):
-   results = []
-   for hash_function in hash_functions:
-       index = hash_function(item) % m
-       if bit_array[index]:
-           results.append(True)
-       else:
-           results.append(False)
-   return reduce(lambda a, b : a & b, results)  
+```c++
+bool Bloom_filters::query_URL(string element)
+{
+    bool found = false;
+    uint32_t fnv_index = FNV_hash(element);
+    uint32_t murmur_index = Murmur_hash(element);
+    if(filter_array[fnv_index] == 1 && filter_array[murmur_index] == 1)
+    {
+        found = true;
+    }
+
+    if(Hash_number > 2)
+    {
+        for(int i=3;i<=Hash_number;i++)
+        {
+            uint32_t hash_index = fnv_index + (i * murmur_index);
+            hash_index = hash_index % size_of_filter;
+            if(filter_array[hash_index] != 1)
+                found = false;
+        }
+    }
+    return found;
+}
 ```
