@@ -34,12 +34,27 @@ Bloom filter is a probabilistic data structure invented by Burton Howard Bloom i
  A basic bloom filter will have two operations **test** and **add.** The Base data structure for the bloom filter is **bit vector** or **bit-array.** It uses a bit array of size **m** and **k** hash functions. Initially, all the bits in bit vector will be set to 0.
 
 _**To add an element to the bloom filter, we hash the element k times using hash functions and set bits at indexes of those hash values.**_
+
  
- 
- <script src="https://gist.github.com/Sadham-Hussian/7aabe80f8f25a3cbbcd4e4fa26ff46dd.js"></script>
- 
+ ```python3
+ def add(item):
+    for hash_function in hash_functions:
+        index = hash_function(item) % m
+        bit_array[index] = True
+ ```
+  
  
  To test for membership, we simply hash the element with hash functions and then check if those indices are set in the bit vector. If the bit at all those indices is not set, you know that the element is not in the set. If they are set, it might be because the same element or combination of other elements could have set the same bits. Later is the reason why a bloom filter can sometimes give a **false positive** answer.
  
- 
- <script src="https://gist.github.com/Sadham-Hussian/8fcd3140a0bfcee5ad285c6aafd0c75f.js"></script>
+
+```python3
+def test(item):
+   results = []
+   for hash_function in hash_functions:
+       index = hash_function(item) % m
+       if bit_array[index]:
+           results.append(True)
+       else:
+           results.append(False)
+   return reduce(lambda a, b : a & b, results)  
+```
