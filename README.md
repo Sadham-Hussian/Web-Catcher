@@ -1,5 +1,5 @@
-# Web-Zwischenspeicher
-Web-Zwischenspeicher developed with C++ maintains the Cache of a browser.The Cache Memory is implemented using Splay trees to handle Cache efficiently. Loading and Searching of URL is implemented with Bloom Filters to make the process efficient.
+# Web-Catcher
+Web-Catcher developed with C++ maintains the Cache of a browser.The Cache Memory is implemented using Splay trees to handle Cache efficiently. Loading and Searching of URL is implemented with Bloom Filters to make the process efficient.
 
 # Bloom Filters
 Bloom filter is a probabilistic data structure invented by Burton Howard Bloom in 1970. It allows for membership check-in constant space and time. Bloom filter trades exactness for efficiency and has a large number of applications in software engineering.
